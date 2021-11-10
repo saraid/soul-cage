@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    pre, .bluetext { color: blue; }
+    .italics { font-style: italic; }
+    .smilie { width: 22px; height: 22px; }
+    .big-grin { background: url('https://forum.rpg.net/styles/default/xenforo/smilies/emojione/sprite_sheet_emojione.png') no-repeat 0px -22px; background-size: 100%; }
+    .wink { background: url('https://forum.rpg.net/styles/default/xenforo/smilies/emojione/sprite_sheet_emojione.png') no-repeat 0px -176px; background-size: 100%; }
+  </style>
+</head>
+<body>
+  <%= @body %>
+</body>
+</html>
