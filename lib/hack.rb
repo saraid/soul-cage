@@ -1,9 +1,10 @@
-require 'kramdown'
+require_relative './custom_parser'
 
 Dir.chdir(`git rev-parse --show-toplevel`.chomp)
 pages = `find pages -name \*.page`.split($/)
 
 kramdown_options = {
+  input: 'CustomParser',
   template: 'templates/default.template'
 }
 

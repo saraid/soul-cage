@@ -1,1 +1,1 @@
-find pages -name \*.page | sed -e 's/\.page$//' | sed -e 's/^pages\///' | xargs -n1 -Ix -t bash -c 'kramdown --template templates/default.template pages/x.page > docs/x.html'
+ruby lib/hack.rb
