@@ -5,6 +5,8 @@ module Kramdown
   module Parser
     class CustomParser < Kramdown::Parser::Kramdown
 
+      # emoji parsing stolen entirely from kramdown/parser-gfm
+
       EMOJI_NAMES   = Emoji.all.flat_map(&:aliases).freeze
       REGISTRY      = EMOJI_NAMES.zip(EMOJI_NAMES).to_h.freeze
       EMOJI_PATTERN = /:(\w+):/
