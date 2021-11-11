@@ -7,6 +7,8 @@
     .smilie { width: 22px; height: 22px; }
     .big-grin { background: url('https://forum.rpg.net/styles/default/xenforo/smilies/emojione/sprite_sheet_emojione.png') no-repeat 0px -22px; background-size: 100%; }
     .wink { background: url('https://forum.rpg.net/styles/default/xenforo/smilies/emojione/sprite_sheet_emojione.png') no-repeat 0px -176px; background-size: 100%; }
+
+    .card { display: none; position: absolute; background-color: white; border: dotted 1px grey; padding: 4px; }
   </style>
 </head>
 <body>
@@ -609,5 +611,25 @@ We continue our non-linear exploration of these characters we call ‘player’ 
 
 <p>“The King of the Dead. Right” - Samael, mentally kicking himself.</p>
 
+  
+
+  <script type="text/javascript">
+    Array.from(document.getElementsByClassName('card')).forEach(card => {
+      card.onmouseout = () => card.style.display = 'none';
+    });
+    Array.from(document.getElementsByTagName('abbr')).forEach((abbr) => {
+      const card = Array.from(document.getElementsByClassName('card')).find(card => {
+        return card.id === `card-${abbr.title.replace('/', '-')}`;
+      });
+      abbr.onmouseover = () => {
+        card.style.display = 'block';
+        card.style.top = abbr.offsetTop + abbr.offsetHeight + 'px';
+        card.style.left = abbr.offsetLeft + 'px';
+      };
+      abbr.onmouseout = () => {
+        card.style.display = 'none';
+      };
+    });
+  </script>
 </body>
 </html>
