@@ -1,7 +1,7 @@
 class LatticedDocument
   class Page
     def self.paths
-      LatticedDocument.root.glob('pages/**/*.page')
+      Lattice.current.root.glob('pages/**/*.page')
     end
 
     def self.all
@@ -10,7 +10,7 @@ class LatticedDocument
 
     def initialize(filename)
       @filename = filename
-      @document = LatticedDocument.new(File.read(filename))
+      @document = LatticedDocument.new(source_with_inclusions)
     end
     attr_reader :document
     attr_accessor :cards
@@ -20,17 +20,17 @@ class LatticedDocument
     end
 
     def inclusions
-      cards.map do |card|
-        "*[#{card.reference}]: #{card.as_abbreviation}"
+      Lattice.current.cards.map do |card|
+        "*[#{card.reference.to_s.capitalize}]: #{card.as_abbreviation}"
       end.join($/)
     end
 
     def output_filename
       @filename
-        .relative_path_from(LatticedDocument.root)
+        .relative_path_from(Lattice.current.root)
         .sub(%r{^pages}, 'docs')
         .sub_ext('.html')
-        .yield_self(&LatticedDocument.root.method(:join))
+        .yield_self(&Lattice.current.root.method(:join))
     end
 
     def html

@@ -19,12 +19,12 @@ class LatticedDocument
     end
 
     def as_abbreviation
-      @filename.sub(%r{cards/}, '').sub(%r{\.card$}, '')
+      @filename.relative_path_from(Lattice.current.root).sub(%r{cards/}, '').sub(%r{\.card$}, '')
     end
 
     def html_id
       @filename
-        .relative_path_from(LatticedDocument.root)
+        .relative_path_from(Lattice.current.root)
         .sub(%r{^cards/}, '')
         .sub(%r{\.card$}, '')
     end
