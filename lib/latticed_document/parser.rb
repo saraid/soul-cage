@@ -7,8 +7,6 @@ class LatticedDocument
       super
 
       @source = "#{inclusions}\n\n#{source}"
-
-      @span_parsers.unshift(:emoji)
     end
 
     def inclusions

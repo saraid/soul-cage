@@ -22,9 +22,16 @@ class LatticedDocument
       @filename.sub(%r{cards/}, '').sub(%r{\.card$}, '')
     end
 
+    def html_id
+      @filename
+        .relative_path_from(LatticedDocument.root)
+        .sub(%r{^cards/}, '')
+        .sub(%r{\.card$}, '')
+    end
+
     def html
       document.to_html.yield_self do |html|
-        %Q{<div id="card-#{card_reference.gsub('/', '-')}" class="card character">#{html}</div>}
+        %Q{<div id="card-#{html_id.to_s.gsub('/', '-')}" class="card character">#{html}</div>}
       end
     end
   end

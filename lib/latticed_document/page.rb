@@ -29,7 +29,7 @@ class LatticedDocument
       @filename
         .relative_path_from(LatticedDocument.root)
         .sub(%r{^pages}, 'docs')
-        .sub_ext('html')
+        .sub_ext('.html')
         .yield_self(&LatticedDocument.root.method(:join))
     end
 

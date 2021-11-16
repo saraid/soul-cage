@@ -1,7 +1,11 @@
 class LatticedDocument
   class Lattice
     def self.generate!
-      new
+      (@instance = new).generate!
+    end
+
+    def self.instance
+      @instance
     end
 
     def initialize
@@ -9,5 +13,14 @@ class LatticedDocument
       @pages = Page.all
     end
     attr_reader :cards, :pages
+
+    def generate!
+      pages.each do |page|
+        File.open(page.output_filename, 'w') do |f|
+          $stderr.puts f.inspect
+          f.write(page.html)
+        end
+      end
+    end
   end
 end

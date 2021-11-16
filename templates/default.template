@@ -13,7 +13,7 @@
 </head>
 <body>
   <%= @body %>
-  <%= @converter.cards.values.join($/) %>
+  <%= @converter.cards.map(&:html).join($/) %>
 
   <script type="text/javascript">
     Array.from(document.getElementsByClassName('card')).forEach(card => {
