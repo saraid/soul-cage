@@ -20,9 +20,7 @@ class LatticedDocument
     end
 
     def inclusions
-      Lattice.current.cards.map do |card|
-        "*[#{card.reference.to_s.capitalize}]: #{card.as_abbreviation}"
-      end.join($/)
+      Lattice.current.cards.map(&:as_inclusion).join($/)
     end
 
     def output_filename

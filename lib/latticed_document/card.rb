@@ -14,12 +14,10 @@ class LatticedDocument
     end
     attr_reader :document
 
-    def reference
-      @filename.basename.sub(%r{\.card$}, '')
-    end
-
-    def as_abbreviation
-      @filename.relative_path_from(Lattice.current.root).sub(%r{cards/}, '').sub(%r{\.card$}, '')
+    def as_inclusion
+      ref = @filename.basename.sub(%r{\.card$}, '').to_s.capitalize
+      dst = @filename.relative_path_from(Lattice.current.root).sub(%r{cards/}, '').sub(%r{\.card$}, '').to_s
+      "*[#{ref}]: #{dst}"
     end
 
     def html_id
