@@ -1,7 +1,7 @@
 class LatticedDocument
   class Converter < Kramdown::Converter::Html
     def cards
-      Lattice.instance.cards
+      Lattice.current.cards
     end
   end
 end
