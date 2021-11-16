@@ -15,9 +15,9 @@ module Kramdown
       include EmojiParser
 
       def initialize(source, options)
-        source_with_inclusions = "#{inclusions}\n\n#{source}"
+        super
 
-        super(source_with_inclusions, options)
+        @source = "#{inclusions}\n\n#{source}"
 
         @span_parsers.unshift(:emoji)
       end
