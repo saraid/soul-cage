@@ -15,9 +15,18 @@ module Kramdown
       include EmojiParser
 
       def initialize(source, options)
-        super
+        source_with_inclusions = "#{inclusions}\n\n#{source}"
+
+        super(source_with_inclusions, options)
 
         @span_parsers.unshift(:emoji)
+      end
+
+      def inclusions
+        <<~INCLUSIONS
+        *[Samael]: characters/samael
+        *[Cobalt]: characters/cobalt
+        INCLUSIONS
       end
     end
   end
@@ -29,7 +38,6 @@ module Kramdown
       end
 
       def self.cards=(result)
-        puts 'help'
         @cards = result
       end
 
