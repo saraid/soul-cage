@@ -1,28 +1,25 @@
 require_relative './custom_parser'
 
 Dir.chdir(`git rev-parse --show-toplevel`.chomp)
-pages = `find pages -name \*.page`.split($/)
-cards = `find cards -name \*.card`.split($/)
 
 kramdown_options = {
   input: 'CustomParser',
   template: 'templates/default.template'
 }
 
-cards =
-  cards.map do |input_filename|
-    card_reference = input_filename.sub(%r{cards/}, '').sub(%r{\.card$}, '')
-    source_text = File.read(input_filename)
-    document = Kramdown::Document.new(source_text)
-    html = document.to_html.yield_self do |html|
-      %Q{<div id="card-#{card_reference.gsub('/', '-')}" class="card character">#{html}</div>}
-    end
+cards = Dir.glob('cards/**/*.card').map do |input_filename|
+  card_reference = input_filename.sub(%r{cards/}, '').sub(%r{\.card$}, '')
+  source_text = File.read(input_filename)
+  document = Kramdown::Document.new(source_text)
+  html = document.to_html.yield_self do |html|
+    %Q{<div id="card-#{card_reference.gsub('/', '-')}" class="card character">#{html}</div>}
+  end
 
-    [card_reference, html]
-  end.to_h
+  [card_reference, html]
+end.to_h
 
 
-pages.each do |input_filename|
+Dir.glob('pages/**/*.page').each do |input_filename|
   source_text = File.read(input_filename)
   output_filename = input_filename.yield_self do |filename|
     parts = filename.split('/')
