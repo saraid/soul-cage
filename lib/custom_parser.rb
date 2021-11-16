@@ -4,6 +4,12 @@ require 'gemoji'
 require_relative './emoji_parser'
 
 module Kramdown
+  class CustomDocument < Document
+    def initialize(source, options = {})
+      super
+    end
+  end
+
   module Parser
     class CustomParser < Kramdown::Parser::Kramdown
       include EmojiParser
@@ -18,10 +24,19 @@ module Kramdown
 
   module Converter
     class CustomConverter < ::Kramdown::Converter::Html
+      def self.cards
+        @cards
+      end
+
+      def self.cards=(result)
+        puts 'help'
+        @cards = result
+      end
+
       def initialize(root, options)
         super
 
-        @cards = {}
+        @cards = self.class.cards
       end
       attr_reader :cards
 
@@ -30,17 +45,7 @@ module Kramdown
         attr = @root.options[:abbrev_attr][el.value].dup
         attr['title'] = title unless title.empty?
 
-        body = el.value
-        if title.match(%r{characters/\w+})
-          @cards[title] ||=
-            File.join(`git rev-parse --show-toplevel`.chomp, "cards/#{title}.card")
-              .yield_self(&File.method(:read))
-              .yield_self(&::Kramdown::Document.method(:new))
-              .to_html
-              .yield_self { |html| %Q{<div id="card-#{title.gsub('/', '-')}" class="card character">#{html}</div>} }
-        end
-
-        format_as_span_html("abbr", attr, body)
+        format_as_span_html("abbr", attr, el.value)
       end
     end
   end
