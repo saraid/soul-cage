@@ -1,7 +1,7 @@
 class LatticedDocument
   class Lattice
-    def self.generate!
-      new.generate!
+    def self.generate!(root: Pathname.new(`git rev-parse --show-toplevel`.chomp))
+      new(root).generate!
     end
 
     def self.generating(lattice)
@@ -14,7 +14,7 @@ class LatticedDocument
       @current
     end
 
-    def initialize(root = Pathname.new(`git rev-parse --show-toplevel`.chomp))
+    def initialize(root)
       @root = root
     end
     attr_reader :root
